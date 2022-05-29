@@ -14,10 +14,10 @@ refs.input.addEventListener('input', formValidation);
 let formTextContent = {};
 
 function formValidation(e) {
-  // e.preventDefault();
   if (refs.input.value === '' || refs.input.value == null) {
-    refs.input.setAttribute('placeholder', 'enter email');
+    // refs.input.setAttribute('placeholder', 'enter email');
     alert('enter email');
+    e.preventDefault();
   }
 }
 
@@ -28,8 +28,9 @@ function setEmailAndMessageValue(e) {
 }
 
 function onFormSubmit(e) {
-  e.preventDefault();
   formValidation();
+  e.preventDefault();
+
   e.currentTarget.reset();
   localStorage.removeItem('STORAGE_KEY');
   console.log(formTextContent);
