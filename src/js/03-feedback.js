@@ -16,8 +16,8 @@ let formTextContent = {};
 function formValidation(e) {
   // e.preventDefault();
   if (refs.input.value === '' || refs.input.value == null) {
-    refs.input.placeholder = 'enter e-mail';
-    alert('enter e-mail');
+    refs.input.setAttribute('placeholder', 'enter email');
+    alert('enter email');
   }
 }
 
