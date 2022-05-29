@@ -12,9 +12,22 @@ player.getVideoTitle().then(function (title) {
   console.log('title:', title);
 });
 
-player.setCurrentTime(localStorage.getItem(STORAGE_KEY)).then(function (seconds) {
-  seconds = 0;
-});
+player
+  .setCurrentTime(localStorage.getItem(STORAGE_KEY))
+  .then(function (seconds) {
+    seconds = 0;
+  })
+  .catch(function (error) {
+    switch (error.name) {
+      case 'RangeError':
+        // the time was less than 0 or greater than the video’s duration
+        break;
+
+      default:
+        // some other error occurred
+        break;
+    }
+  });
 
 const throttledTimeUpdate = throttle(timeUpdate, 1000);
 
