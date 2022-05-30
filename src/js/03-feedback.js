@@ -9,17 +9,9 @@ const STORAGE_KEY = 'feedback-form-state';
 
 refs.form.addEventListener('input', throttle(setEmailAndMessageValue, 500));
 refs.form.addEventListener('submit', onFormSubmit);
-refs.input.addEventListener('input', formValidation);
+// refs.input.addEventListener('input', formValidation);
 
-let formTextContent = {};
-
-function formValidation(e) {
-  if (refs.input.value === '' || refs.input.value == null) {
-    // refs.input.setAttribute('placeholder', 'enter email');
-    alert('enter email');
-    e.preventDefault();
-  }
-}
+let formTextContent;
 
 function setEmailAndMessageValue(e) {
   formTextContent[e.target.name] = e.target.value;
@@ -28,25 +20,48 @@ function setEmailAndMessageValue(e) {
 }
 
 function onFormSubmit(e) {
-  formValidation();
   e.preventDefault();
-
+  formValidation(e);
   e.currentTarget.reset();
   localStorage.removeItem('STORAGE_KEY');
-  console.log(formTextContent);
+  formTextContent = {};
 }
 
-function getDataFromStarageToInput() {
-  const localData = JSON.parse(localStorage.getItem('STORAGE_KEY'));
-  if (localData) {
-    setDataFromLocalStorage(localData);
+function formValidation() {
+  if (!formTextContent['email'] || !formTextContent['message']) {
+    alert('Fill form');
+    // if (true) {
+    //   validateEmail();
+    // }
+  } else {
+    console.log(formTextContent);
   }
+}
+
+// function validateEmail(e) {
+//   var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+//   if (e.target.data.email.match(mailformat)) {
+//     alert('Valid email address!');
+//     document.form1.text1.focus();
+//     return true;
+//   } else {
+//     alert('You have entered an invalid email address!');
+//     document.form1.text1.focus();
+//     return false;
+//   }
+// }
+
+function getDataFromStarageToInput() {
+  formTextContent = JSON.parse(localStorage.getItem('STORAGE_KEY'));
+  if (formTextContent) {
+    setDataFromLocalStorage(formTextContent);
+  } else formTextContent = {};
 }
 getDataFromStarageToInput();
 
-function setDataFromLocalStorage(localData) {
-  console.log(localData);
-  for (const key in localData) {
-    refs.form[key].value = localData[key];
+function setDataFromLocalStorage(formTextContent) {
+  console.log(formTextContent);
+  for (const key in formTextContent) {
+    refs.form[key].value = formTextContent[key];
   }
 }
