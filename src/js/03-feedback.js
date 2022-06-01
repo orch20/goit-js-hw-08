@@ -60,7 +60,6 @@ function getDataFromStarageToInput() {
 getDataFromStarageToInput();
 
 function setDataFromLocalStorage(formTextContent) {
-  console.log(formTextContent);
   for (const key in formTextContent) {
     refs.form[key].value = formTextContent[key];
   }
